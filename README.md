@@ -1,12 +1,13 @@
 <h2 align="center">
     <img src="images/logo.png" alt="Logo" width="200">
-<h2 align="center">
-    <a href="#">AsFT: Anchoring Safety During LLM Fune-Tuning Within Narrow Safety Basin</a> <br>
 </h2>
-<h5 align="center"> Code for the paper "AsFT: Anchoring Safety During LLM Fune-Tuning Within Narrow Safety Basin", introducing a regularization-based method to anchor parameter updates within safety-aligned subspaces for robust LLM fine-tuning. 
-
-
+<h2 align="center">
+    <a href="#">AsFT: Anchoring Safety During LLM Fine-Tuning Within Narrow Safety Basin</a> 
+</h2>
 <h5 align="center">
+    Code for the paper "AsFT: Anchoring Safety During LLM Fine-Tuning Within Narrow Safety Basin", introducing a regularization-based method to anchor parameter updates within safety-aligned subspaces for robust LLM fine-tuning.
+</h5>
+
     
 
 </h5>

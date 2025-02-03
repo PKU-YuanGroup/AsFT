@@ -1,5 +1,5 @@
 <h2 align="center">
-    <img src="images/logo.png" alt="Logo" width="100">
+    <img src="images/logo.png" alt="Logo" width="300">
 <h2 align="center">
     <a href="#">AsFT: Anchoring Safety During LLM Fune-Tuning Within Narrow Safety Basin</a> <br>
 </h2>

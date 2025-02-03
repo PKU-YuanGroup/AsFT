@@ -91,7 +91,6 @@ def train(model, train_dataloader,eval_dataloader, tokenizer, optimizer, lr_sche
             total_length = len(train_dataloader)//gradient_accumulation_steps
             if not train_config.enable_fsdp or rank == 0: pbar = tqdm(colour="blue", desc=f"Training Epoch: {epoch}", total=total_length)
             for step, batch in enumerate(train_dataloader):
-            # for step, batch in enumerate(tqdm(train_dataloader,colour="blue", desc=f"Training Epoch{epoch}")):
                 for key in batch.keys():
                     if train_config.enable_fsdp:
                         batch[key] = batch[key].to(local_rank)
@@ -106,17 +105,15 @@ def train(model, train_dataloader,eval_dataloader, tokenizer, optimizer, lr_sche
                     for i, (name, param) in enumerate(model.named_parameters()):
                         if 'lora_A' in name:
                             lora_a = param
-                            # print(f"lora_a.shape=={lora_a.shape}")
                             lora_b_name = name.replace('lora_A', 'lora_B')
                             lora_b = dict(model.named_parameters())[lora_b_name]
                             delta_w = torch.mm(lora_b, lora_a)
                             c_hat = project_matrix[idx].to(delta_w.device)
-                            # Calculate (I - C^hat) * ΔW, ensuring all are on the same device
                             identity = torch.eye(c_hat.shape[0], device=delta_w.device)
                             regularized_term = (identity - c_hat) @ delta_w
                             reg_loss += lambda_reg * torch.norm(regularized_term, p='fro') ** 2
                             idx += 1
-                    # print(f'\n reg_loss is {reg_loss}')
+
                     loss = loss + reg_loss
             
                 if not loss.isnan(): # in case the loss is nan (this may sometimes happen due to cropping the training samples by length = `max_words`)

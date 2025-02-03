@@ -9,7 +9,6 @@ from peft import PeftModel
 from datasets import load_dataset
 
 def load_test_data(args):
-    """加载测试数据"""
     if os.path.exists(args.test_data_path):
         with open(args.test_data_path, 'r', encoding='utf-8') as f:
             input_data_lst = json.load(f)
@@ -31,7 +30,6 @@ def load_test_data(args):
     return input_data_lst
 
 def initialize_model_and_tokenizer(args):
-    """加载模型和 tokenizer"""
     tokenizer = AutoTokenizer.from_pretrained(args.model_folder, cache_dir=args.cache_dir, use_fast=True)
     tokenizer.pad_token_id = 0
     model = AutoModelForCausalLM.from_pretrained(
@@ -47,7 +45,6 @@ def initialize_model_and_tokenizer(args):
     return model, tokenizer
 
 def query(data, model, tokenizer):
-    """生成模型预测"""
     instruction = data["instruction"]
     input = data["input"]
     prompt = f"Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.\n\n### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:\n"

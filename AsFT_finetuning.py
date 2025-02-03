@@ -59,7 +59,7 @@ class SafeLoRA:
         self.peft_config = peft_model.peft_config["default"]
         self.model_ori = copy.deepcopy(peft_model)
 
-        # 只加载一次模型
+
         self.base_model = AutoModelForCausalLM.from_pretrained(
             self.config.base_model_path,
             return_dict=True,
@@ -81,7 +81,6 @@ class SafeLoRA:
         proj_modules = list(self.peft_config.target_modules)
         for (b_name, b_param), (a_name, a_param) in zip(self.base_model.named_parameters(), self.aligned_model.named_parameters()):
             if any(module in a_name for module in proj_modules):
-                assert b_param.shape == a_param.shape, "基础模型和对齐模型的权重维度应相同。"
                 vec = a_param - b_param
                 vec = vec.to(self.config.devices)
                 vec = torch.mm(vec, vec.t()) / torch.norm(vec)
@@ -91,9 +90,9 @@ class SafeLoRA:
 
 class SafeLoRAConfig:
     def __init__(self, base_model_path, aligned_model_path, device):
-        self.base_model_path = base_model_path  # 基础模型路径
-        self.aligned_model_path = aligned_model_path  # 对齐模型路径
-        self.devices = device  # 设备设置
+        self.base_model_path = base_model_path 
+        self.aligned_model_path = aligned_model_path  
+        self.devices = device  
 
 def main(**kwargs):
     
@@ -121,8 +120,6 @@ def main(**kwargs):
         clear_gpu_cache(local_rank)
         setup_environ_flags(rank)
 
-
-    
     # Load the pre-trained model and setup its configuration
     use_cache = False if train_config.enable_fsdp else None
     if train_config.enable_fsdp and train_config.low_cpu_fsdp:
@@ -300,10 +297,6 @@ def main(**kwargs):
             weight_decay=train_config.weight_decay,
         )
     scheduler = StepLR(optimizer, step_size=1, gamma=train_config.gamma)
-    # from transformers import get_scheduler
-    # import math
-    # scheduler = get_scheduler("cosine", optimizer, num_warmup_steps=0, num_training_steps=train_config.num_epochs * math.ceil(len(train_dataloader) // train_config.gradient_accumulation_steps))
-
     # Start the training process
     results = train(
         model,

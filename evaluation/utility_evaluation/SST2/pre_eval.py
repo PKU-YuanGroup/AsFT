@@ -76,8 +76,6 @@ def main():
 
     output_folder = os.path.dirname(args.output_path)
     os.makedirs(output_folder, exist_ok=True)
-
-    # 从本地的jsonl文件加载数据
     input_data_lst = []
     with open(args.input_jsonl_path, 'r', encoding='utf-8') as f:
         for line in f:

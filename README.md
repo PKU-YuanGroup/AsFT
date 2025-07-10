@@ -170,6 +170,17 @@ AsFT/
 
 ---
 
+## 📜 Citation
+```bibtex
+@misc{asft2025,
+  title={AsFT: Anchoring Safety During LLM Fine-Tuning Within Narrow Safety Basin},
+  author={Shuo Yang, Qihui Zhang, Yuyang Liu, Yue Huang, Xiaojun Jia, Kunpeng Ning, Jiayu Yao, Jigang Wang, Hailiang Dai, Yibing Song, Li Yuan.},
+  year={2025},
+  url={https://arxiv.org/abs/2506.08473}
+}
+```
+---
+
 ## 🙏 Acknowledgment
 
 This repository is built upon the following open-source projects:  
